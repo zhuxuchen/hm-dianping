@@ -32,7 +32,7 @@ public class ShopTypeServiceImpl extends ServiceImpl<ShopTypeMapper, ShopType> i
     StringRedisTemplate stringRedisTemplate;
 
     @Override
-    public Result listAll() {
+    public Result listShopType() {
         // 1.从redis中查询商品缓存
         String key = SHOP_TYPE_KEY;
         String shopTypesJson = stringRedisTemplate.opsForValue().get(key);
@@ -46,7 +46,7 @@ public class ShopTypeServiceImpl extends ServiceImpl<ShopTypeMapper, ShopType> i
         List<ShopType> shopTypes = list();
         // 5.不存在，返回错误
         if (shopTypes == null) {
-            return Result.fail("店铺不存在！");
+            return Result.fail("商品分类信息为空！");
         }
         // 6.存在，写入redis
         stringRedisTemplate.opsForValue().set(key, JSONUtil.toJsonStr(shopTypes));
