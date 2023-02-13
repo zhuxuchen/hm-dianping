@@ -30,8 +30,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-import static com.hmdp.utils.RedisConstants.LOGIN_USER_KEY;
-import static com.hmdp.utils.RedisConstants.LOGIN_USER_TTL;
+import static com.hmdp.utils.RedisConstants.*;
 
 @SpringBootTest
 class HmDianPingApplicationTests {
@@ -112,11 +111,21 @@ class HmDianPingApplicationTests {
         System.out.println("tokens = " + tokens);
         @Cleanup FileWriter fileWriter = new FileWriter(System.getProperty("user.dir") + "\\tokens.txt");
         @Cleanup BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-//        assert tokens != null;
+        assert tokens != null;
         for (String token : tokens) {
             String substring = token.substring(LOGIN_USER_KEY.length());
             String txt = substring + "\n";
             bufferedWriter.write(txt);
         }
+    }
+
+    /**
+     * 保存秒杀库存到Redis中
+     */
+    @Test
+    void addSeckillVoucher(){
+        // 保存秒杀库存到Redis中
+        stringRedisTemplate.opsForValue()
+                .set(SECKILL_STOCK_KEY + 12, String.valueOf(200));
     }
 }
