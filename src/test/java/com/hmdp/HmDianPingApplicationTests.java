@@ -15,6 +15,7 @@ import com.hmdp.utils.RedisIdWorker;
 import lombok.Cleanup;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.redis.connection.stream.ReadOffset;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
 import javax.annotation.Resource;
@@ -127,5 +128,12 @@ class HmDianPingApplicationTests {
         // 保存秒杀库存到Redis中
         stringRedisTemplate.opsForValue()
                 .set(SECKILL_STOCK_KEY + 12, String.valueOf(200));
+    }
+
+    @Test
+    void addStream(){
+        // 创建名为stream.orders的队列
+        // XGROUP CREATE stream.orders g1 0 MKSTREAM
+        stringRedisTemplate.opsForStream().createGroup("stream.orders", ReadOffset.from("0"), "g1");
     }
 }
