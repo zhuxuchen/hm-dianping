@@ -1,7 +1,6 @@
 package com.hmdp.controller;
 
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hmdp.dto.Result;
 import com.hmdp.dto.UserDTO;
@@ -56,6 +55,12 @@ public class BlogController {
         return Result.ok(records);
     }
 
+    @GetMapping("/of/follow")
+    public Result queryBlogOfFollow(
+            @RequestParam(value = "lastId") Long max,
+            @RequestParam(value = "offset",defaultValue = "0") Integer offset) {
+        return blogService.queryBlogOfFollow(max, offset);
+    }
 
     @GetMapping("/hot")
     public Result queryHotBlog(@RequestParam(value = "current", defaultValue = "1") Integer current) {
