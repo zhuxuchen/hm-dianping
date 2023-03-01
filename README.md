@@ -6,10 +6,11 @@
   + Spring
   + SpringMVC
   + Mybatis-Plus
-  + MySQL
 + 前端框架：
   + Vue
   + ElementUI
++ 数据库：
+  + MySQL
 + 中间件：
   + Redis
   + Nginx
